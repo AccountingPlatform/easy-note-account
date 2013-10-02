@@ -111,4 +111,9 @@ class main extends spController
         $this->in_sum = $inSum;
         $this->display('itemList.html');
     }
+
+    function logout(){
+        unset($_SESSION['userInfo']);
+        $this->jump(spUrl('main','index'));
+    }
 }
