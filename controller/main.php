@@ -2,6 +2,7 @@
 class main extends spController
 {
 	function index(){
+        $this->logout = $this->spArgs('act');
         if($_SESSION['userInfo']['id']){
             $this->jump(spUrl('main','itemAdd'));
             return;
@@ -57,6 +58,8 @@ class main extends spController
         $cateMod = spClass('libCate');
         $this->cateList = $cateMod->cateList;
 
+        $this->a1 = $_SESSION['userInfo']['id'];
+        $this->a2 = md5($_SESSION['userInfo']['media_user_id']);
         $this->display('itemAdd.html');
     }
 
@@ -112,8 +115,21 @@ class main extends spController
         $this->display('itemList.html');
     }
 
+    function local(){
+        $id = $this->spArgs('a1');
+        $token = $this->spArgs('a2');
+        $userMod = spClass('libUser');
+        $userInfo = $userMod->find(array('id'=>$id));
+        if(md5($userInfo['media_user_id']) == $token ){
+            $_SESSION['userInfo'] = $userInfo;
+            echo 1;
+        } else {
+            echo 0;
+        }
+    }
+
     function logout(){
         unset($_SESSION['userInfo']);
-        $this->jump(spUrl('main','index'));
+        $this->jump(spUrl('main','index',array('act'=>'logout')));
     }
 }

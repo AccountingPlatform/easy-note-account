@@ -58,6 +58,34 @@
     </div>
     <script src="/public/js/jquery.min.js"></script>
     <script src="/public/js/bootstrap.min.js"></script>
+    <script type="text/javascript">
+    $(function(){
+      if(window.localStorage){
+        var tag = '<?php echo $logout;?>';
+        if(tag == 'logout'){
+          localStorage['a1'] = '';
+          localStorage['a2'] = '';
+          return;
+        }
+        var a1 = localStorage['a1'];
+        var a2 = localStorage['a2'];
+        if(a1 && a2){
+          $.get(
+            "<?php echo spUrl('main','local');?>",
+            {a1:a1,a2:a2},
+            function(r){
+              if(r==1){
+                location.href = "<?php echo spUrl('main','itemAdd');?>";
+              } else {
+                localStorage['a1'] = '';
+                localStorage['a2'] = '';
+              }
+            }
+          );
+        }
+      }
+    });
+    </script>
     <script src="/public/js/tongji.js"></script>
   </body>
 </html>
