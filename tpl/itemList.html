@@ -1,0 +1,75 @@
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title>记账</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="author" content="ety001">
+
+    <!-- Le styles -->
+    <link href="/public/css/bootstrap.min.css" rel="stylesheet">
+    <link href="/public/css/bootstrap-responsive.min.css" rel="stylesheet">
+    <link href="/public/css/index_styles.css" rel="stylesheet">
+
+    <!-- HTML5 shim, for IE6-8 support of HTML5 elements -->
+    <!--[if lt IE 9]>
+      <script src="//cdnjs.bootcss.com/ajax/libs/html5shiv/3.6.2/html5shiv.js"></script>
+    <![endif]-->
+  </head>
+
+  <body>
+
+    <div class="container-narrow">
+
+      <div class="masthead">
+        <ul class="nav nav-pills">
+          <?php global $__action;?>
+          <li <?php echo ($__action=='itemAdd')?'class="active"':'';?> ><a href="<?php echo spUrl('main','itemAdd');?>">记账</a></li>
+          <li <?php echo ($__action=='itemList')?'class="active"':'';?> ><a href="<?php echo spUrl('main','itemList');?>">列表</a></li>
+        </ul>
+      </div>
+
+      <hr>
+
+      <div class="container">
+        <?php if($itemLists){?>
+        <table class="table table-hover">
+          <tr>
+            <th>开销内容</th>
+            <th>开销类型</th>
+            <th>收支类型</th>
+            <th>金额</th>
+            <th>时间</th>
+          </tr>
+          <?php foreach ($itemLists as $k => $v) {?>
+          <tr>
+            <td><a href="<?php echo spUrl('main','itemAdd',array('id'=>$v['id']));?>"><?php echo $v['title'];?></a></td>
+            <td><?php echo $cateList[$v['cate_id']];?></td>
+            <td><?php echo $typeList[$v['type']];?></td>
+            <td><?php echo $v['money'];?></td>
+            <td><?php echo date('Y-m-d',$v['time']);?></td>
+          </tr>
+          <?php }?>
+          <tr>
+            <td>&nbsp;</td>
+            <td colspan="2">收入: <?php echo $in_sum;?></td>
+            <td colspan="2">支出: <?php echo $out_sum;?></td>
+          </tr>
+        </table>
+        <?php } else {echo 'no item';}?>
+      </div>
+
+      <hr>
+
+      <div class="footer">
+        <p>&copy; 2013 </p>
+      </div>
+
+    </div> <!-- /container -->
+
+    <script src="/public/js/jquery.min.js"></script>
+    <script src="/public/js/bootstrap.min.js"></script>
+    <script src="/public/js/tongji.js"></script>
+  </body>
+</html>
