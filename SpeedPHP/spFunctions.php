@@ -257,10 +257,10 @@ function spUrl($controller = null, $action = null, $args = null, $anchor = null,
  */
 function __mkdirs($dir, $mode = 0777)
 {
-	//if (!is_dir($dir)) {
-	//	__mkdirs(dirname($dir), $mode);
-	//	return @mkdir($dir, $mode);
-	//}
+	if (!is_dir($dir)) {
+		__mkdirs(dirname($dir), $mode);
+		return @mkdir($dir, $mode);
+	}
 	return true;
 }
 

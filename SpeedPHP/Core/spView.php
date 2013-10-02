@@ -31,7 +31,8 @@ class spView {
 			}
 		}
 		if( !empty($GLOBALS['G_SP']['sp_app_id']) && isset($this->engine->compile_id) )$this->engine->compile_id = $GLOBALS['G_SP']['sp_app_id'];
-		if( empty($this->engine->no_compile_dir) )memcache_init();
+		// 检查编译目录是否可写
+		if( empty($this->engine->no_compile_dir) && (!is_dir($this->engine->compile_dir) || !is_writable($this->engine->compile_dir)))__mkdirs($this->engine->compile_dir);
 		spAddViewFunction('T', array( 'spView', '__template_T'));
 		spAddViewFunction('spUrl', array( 'spView', '__template_spUrl'));
 	}

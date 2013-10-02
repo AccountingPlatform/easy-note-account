@@ -99,7 +99,7 @@ class spAcl
 	public function def_prompt()
 	{
 		$url = spUrl(); // 跳转到首页，在强制权限的情况下，请将该页面设置成可以进入。
-		echo "<html><head><meta http-equiv=\"Content-Type\" content=\"text/html; charset=utf-8\"><script>function sptips(){alert(\"Access Failed!\");location.href=\"{$url}\";}</script></head><body onload=\"sptips()\"></body></html>";
+		echo "<html><head><meta http-equiv=\"Content-Type\" content=\"text/html; charset=utf-8\"><script>function sptips(){alert(\"权限受限,请先登录!\");location.href=\"{$url}\";}</script></head><body onload=\"sptips()\"></body></html>";
 		exit;
 	}
 
