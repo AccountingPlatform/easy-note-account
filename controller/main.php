@@ -4,8 +4,7 @@ class main extends spController
 	function index(){
         $this->logout = $this->spArgs('act');
         if($_SESSION['userInfo']['id']){
-            $this->display('main.html');
-            //$this->jump(spUrl('main','itemAdd'));
+            $this->jump(spUrl('main','itemAdd'));
             return;
         } else {
             $this->display('main.html');
