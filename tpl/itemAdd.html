@@ -62,6 +62,14 @@
                 </select>
               </div>
             </div>
+            <?php if($itemID){?>
+            <div class="control-group">
+              <label for="time">时间修改</label>
+              <div>
+                <input id="time" name="time" type="text" class="input-medium" value="<?php echo date('Y-m-d',$itemInfo['time']);?>" >
+              </div>
+            </div>
+            <?php }?>
             <div class="control-group">
               <label for="money">金额</label>
               <div>

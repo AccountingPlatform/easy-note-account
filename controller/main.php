@@ -76,6 +76,7 @@ class main extends spController
         $itemMod = spClass('libItems');
         if($itemID){
             $itemInfo['id'] = $itemID;
+            $itemInfo['time'] = strtotime($this->spArgs('time'));
             $itemMod->update(array('id'=>$itemID),$itemInfo);
             $this->success('更新成功', spUrl('main','itemList'));
         } else {
