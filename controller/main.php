@@ -135,7 +135,7 @@ class main extends spController
                 break;
             case 'yesterday':
                 $time1 = strtotime('-1 day', $todayTimestamp);//昨天0点的时间戳
-                $time1 = $todayTimestamp;//今天0点的时间戳
+                $time2 = $todayTimestamp;//今天0点的时间戳
                 break;
             case 'thisweek':
                 $temp = strtotime('last Monday',$todayTimestamp);
