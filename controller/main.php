@@ -184,6 +184,9 @@ class main extends spController
                 $time1 = strtotime($t1);
                 $time2 = strtotime($t2);
                 break;
+            case 'all':
+                return '';
+                break;
         }
         return " and `time` >= '{$time1}' and `time` < '{$time2}' ";
     }

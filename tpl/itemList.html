@@ -42,6 +42,7 @@
             <li <?php echo ($time_type=='lastweek')?'class="active"':'';?>><a href="<?php echo spUrl('main','itemList',array('time_type'=>'lastweek'));?>">上周</a></li>
             <li <?php echo ($time_type=='thismonth')?'class="active"':'';?>><a href="<?php echo spUrl('main','itemList',array('time_type'=>'thismonth'));?>">本月</a></li>
             <li <?php echo ($time_type=='lastmonth')?'class="active"':'';?>><a href="<?php echo spUrl('main','itemList',array('time_type'=>'lastmonth'));?>">上月</a></li>
+            <li <?php echo ($time_type=='all')?'class="active"':'';?>><a href="<?php echo spUrl('main','itemList',array('time_type'=>'all'));?>">全部</a></li>
           </ul>
         </div>
         <?php if($itemLists){?>
