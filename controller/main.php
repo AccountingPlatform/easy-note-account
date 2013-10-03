@@ -163,7 +163,7 @@ class main extends spController
                 $time2 = $time1 + 7*24*3600;//这周一0点的时间戳
                 break;
             case 'thismonth':
-                $monthDays = cal_days_in_month(CAL_GREGORIAN, $month, $year);
+                $monthDays = days_in_month($month, $year);
                 $time1 = strtotime($year.'-'.$month.'-1');
                 $time2 = $time1 + $monthDays*24*3600;
                 break;
@@ -174,7 +174,7 @@ class main extends spController
                 } else {
                     $month = $month - 1;
                 }
-                $monthDays = cal_days_in_month(CAL_GREGORIAN, $month, $year);
+                $monthDays = days_in_month($month, $year);
                 $time1 = strtotime($year.'-'.$month.'-1');
                 $time2 = $time1 + $monthDays*24*3600;
                 break;
