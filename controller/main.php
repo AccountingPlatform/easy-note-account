@@ -70,8 +70,7 @@ class main extends spController
             'title' => $this->spArgs('title','唉，我又花钱了'),
             'cate_id' => (int)$this->spArgs('cate_id',1),
             'type' => (int)$this->spArgs('type',1),
-            'money' => $this->spArgs('money',0),
-            'time' => time()
+            'money' => $this->spArgs('money',0)
         );
         $itemID = (int)$this->spArgs('item_id',0);
         $itemMod = spClass('libItems');
@@ -80,6 +79,7 @@ class main extends spController
             $itemMod->update(array('id'=>$itemID),$itemInfo);
             $this->success('更新成功', spUrl('main','itemList'));
         } else {
+            $itemInfo['time'] = time();
             $itemMod->create($itemInfo);
             $this->success('添加成功', spUrl('main','itemList'));
         }
