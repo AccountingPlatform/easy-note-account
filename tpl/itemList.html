@@ -35,12 +35,12 @@
 
       <div class="container">
         <div>
-          <span class="label label-success"><a href="<?php echo spUrl('main','itemList',array('timeType'=>'today'));?>">今天</a></span>
-          <span><a href="<?php echo spUrl('main','itemList',array('timeType'=>'yesterday'));?>">昨天</a></span>
-          <span><a href="<?php echo spUrl('main','itemList',array('timeType'=>'thisweek'));?>">本周</a></span>
-          <span><a href="<?php echo spUrl('main','itemList',array('timeType'=>'lastweek'));?>">上周</a></span>
-          <span><a href="<?php echo spUrl('main','itemList',array('timeType'=>'thismonth'));?>">本月</a></span>
-          <span><a href="<?php echo spUrl('main','itemList',array('timeType'=>'lastmonth'));?>">上月</a></span>
+          <span class="label label-success"><a href="<?php echo spUrl('main','itemList',array('time_type'=>'today'));?>">今天</a></span>
+          <span><a href="<?php echo spUrl('main','itemList',array('time_type'=>'yesterday'));?>">昨天</a></span>
+          <span><a href="<?php echo spUrl('main','itemList',array('time_type'=>'thisweek'));?>">本周</a></span>
+          <span><a href="<?php echo spUrl('main','itemList',array('time_type'=>'lastweek'));?>">上周</a></span>
+          <span><a href="<?php echo spUrl('main','itemList',array('time_type'=>'thismonth'));?>">本月</a></span>
+          <span><a href="<?php echo spUrl('main','itemList',array('time_type'=>'lastmonth'));?>">上月</a></span>
         </div>
         <?php if($itemLists){?>
         <table class="table table-hover">
