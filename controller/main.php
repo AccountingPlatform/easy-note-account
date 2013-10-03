@@ -115,6 +115,7 @@ class main extends spController
         $this->typeList = array(1=>'支出',2=>'收入');
         $this->out_sum = $outSum;
         $this->in_sum = $inSum;
+        $this->time_type = $timeType;
         $this->display('itemList.html');
     }
 

@@ -36,12 +36,12 @@
       <div class="container">
         <div>
           <ul class="nav nav-pills">
-            <li <?php echo ($_GET['time_type']=='' || $_GET['time_type']=='today')?'class="active"':'';?> ><a href="<?php echo spUrl('main','itemList',array('time_type'=>'today'));?>">今天</a></li>
-            <li <?php echo ($_GET['time_type']=='yesterday')?'class="active"':'';?>><a href="<?php echo spUrl('main','itemList',array('time_type'=>'yesterday'));?>">昨天</a></li>
-            <li <?php echo ($_GET['time_type']=='thisweek')?'class="active"':'';?>><a href="<?php echo spUrl('main','itemList',array('time_type'=>'thisweek'));?>">本周</a></li>
-            <li <?php echo ($_GET['time_type']=='lastweek')?'class="active"':'';?>><a href="<?php echo spUrl('main','itemList',array('time_type'=>'lastweek'));?>">上周</a></li>
-            <li <?php echo ($_GET['time_type']=='thismonth')?'class="active"':'';?>><a href="<?php echo spUrl('main','itemList',array('time_type'=>'thismonth'));?>">本月</a></li>
-            <li <?php echo ($_GET['time_type']=='lastmonth')?'class="active"':'';?>><a href="<?php echo spUrl('main','itemList',array('time_type'=>'lastmonth'));?>">上月</a></li>
+            <li <?php echo ($time_type=='today')?'class="active"':'';?> ><a href="<?php echo spUrl('main','itemList',array('time_type'=>'today'));?>">今天</a></li>
+            <li <?php echo ($time_type=='yesterday')?'class="active"':'';?>><a href="<?php echo spUrl('main','itemList',array('time_type'=>'yesterday'));?>">昨天</a></li>
+            <li <?php echo ($time_type=='thisweek')?'class="active"':'';?>><a href="<?php echo spUrl('main','itemList',array('time_type'=>'thisweek'));?>">本周</a></li>
+            <li <?php echo ($time_type=='lastweek')?'class="active"':'';?>><a href="<?php echo spUrl('main','itemList',array('time_type'=>'lastweek'));?>">上周</a></li>
+            <li <?php echo ($time_type=='thismonth')?'class="active"':'';?>><a href="<?php echo spUrl('main','itemList',array('time_type'=>'thismonth'));?>">本月</a></li>
+            <li <?php echo ($time_type=='lastmonth')?'class="active"':'';?>><a href="<?php echo spUrl('main','itemList',array('time_type'=>'lastmonth'));?>">上月</a></li>
           </ul>
         </div>
         <?php if($itemLists){?>
