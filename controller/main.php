@@ -17,8 +17,20 @@ class main extends spController
     }
 
     function token(){
+        global $apiID,$apiKey;
+        $api = spClass('Denglu',array($apiID,$apiKey));
         $muid = $this->spArgs('mediaUserID');
-        //$token = $this->spArgs('token');
+        $token = $this->spArgs('token');
+        if(!empty($token)){
+            try{
+                $userInfo = $api->getUserInfoByToken($token);
+                var_dump($userInfo);
+            }catch(DengluException $e){//获取异常后的处理办法(请自定义)
+                //return false;     
+                echo $e->geterrorCode();  //返回错误编号
+                echo $e->geterrorDescription();  //返回错误信息
+            }
+        }die();
         if($muid && is_numeric($muid)){
             $userMod = spClass('libUser');
             if($userInfo = $userMod->find(array('media_user_id'=>$muid))){
