@@ -77,6 +77,14 @@
                 <input id="money" name="money" type="text" class="input-medium" value="<?php echo $itemInfo['money'];?>" >
               </div>
             </div>
+            <?php if(!$itemID){?>
+            <div class="control-group">
+              <label>分享</label>
+              <div>
+                <input name="share" type="checkbox" > 是否分享本条记录到你的社交平台(默认不分享)
+              </div>
+            </div>
+            <?php }?>
             <div class="control-group">
               <button type="submit" class="btn btn-success">保存</button>
             </div>

@@ -150,6 +150,15 @@ class main extends spController
         } else {
             $itemInfo['time'] = time();
             $itemMod->create($itemInfo);
+            if($this->spArgs('share') == 'on'){
+                //分享到各个平台
+                $shareInfo = '我刚刚花了 ' . $itemInfo['money'] . '元 ，' . $itemInfo['title'];
+                $socialMod = spClass('libSocial');
+                $socialInfo = $socialMod->findAll(array('uid'=>$_SESSION['userInfo']['id']));
+                foreach ($socialInfo as $k => $v) {
+                    $api->share( $v['media_user_id'] , $shareInfo , 'http://jizhang.ohshit.cc', $v['uid']);
+                }
+            }
             $this->success('添加成功', spUrl('main','itemList'));
         }
         return;
