@@ -27,7 +27,7 @@ class main extends spController
 
     function token(){
         global $apiID,$apiKey;
-        $api = spClass('Denglu',array($apiID,$apiKey));
+        $api = spClass('Denglu',array($apiID,$apiKey,'utf-8'));
         $muid = $this->spArgs('mediaUserID');
         $token = $this->spArgs('token');
         $userMod = spClass('libUser');
@@ -40,7 +40,13 @@ class main extends spController
             } else {
                 $socialMod->create(array('uid'=>$_SESSION['userInfo']['id'],'media_user_id'=>$muid));
                 //绑定
-                $result = $api->bind( $muid, $_SESSION['userInfo']['id']);
+                try{
+                    $result = $api->bind( $muid, $_SESSION['userInfo']['id']);
+                }catch(DengluException $e){
+                    //return false;     
+                    echo $e->geterrorCode();  //返回错误编号
+                    echo $e->geterrorDescription();  //返回错误信息
+                }
 
                 $api->share( $muid, '我刚刚登录了{记账}应用，一款简洁到不能再简洁的应用', 'http://jizhang.ohshit.cc', $_SESSION['userInfo']['id']);
                 $this->success('绑定成功', spUrl('main','index'));
@@ -64,9 +70,21 @@ class main extends spController
                         $userMod->updateField(array('id'=>$socialInfo['uid']),'nickname',$info['screenName']);
                     }
                     //临时的绑定
-                    $result = $api->getBind( '', $userInfo['id']);
+                    try{
+                        $result = $api->getBind( '', $userInfo['id']);
+                    }catch(DengluException $e){
+                        //return false;     
+                        echo $e->geterrorCode();  //返回错误编号
+                        echo $e->geterrorDescription();  //返回错误信息
+                    }
                     if(!$result){
-                        $result = $api->bind( $muid, $userInfo['id']);
+                        try{
+                            $api->bind( $muid, $userInfo['id']);
+                        }catch(DengluException $e){
+                            //return false;     
+                            echo $e->geterrorCode();  //返回错误编号
+                            echo $e->geterrorDescription();  //返回错误信息
+                        }
                     }
                     //登录
                     $userInfo['social'] = $socialMod->findAll(array('uid'=>$socialInfo['uid']));
@@ -134,7 +152,7 @@ class main extends spController
     function itemAddSave(){
         if(!$_SESSION['userInfo']['id'])$this->error('请先登录',spUrl('main','index'));
         global $apiID,$apiKey;
-        $api = spClass('Denglu',array($apiID,$apiKey));
+        $api = spClass('Denglu',array($apiID,$apiKey,'utf-8'));
         $itemInfo = array(
             'uid' => $_SESSION['userInfo']['id'],
             'title' => $this->spArgs('title','唉，我又花钱了'),
