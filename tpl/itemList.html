@@ -29,6 +29,9 @@
           <li <?php echo ($__action=='itemList')?'class="active"':'';?> ><a href="<?php echo spUrl('main','itemList');?>">列表</a></li>
           <li><a href="<?php echo spUrl('main','logout');?>">退出</a></li>
         </ul>
+        <ul class="nav nav-pills pull-right">
+          <li><?php echo $_SESSION['userInfo']['nickname'];?></li>
+        </ul>
       </div>
 
       <hr>
