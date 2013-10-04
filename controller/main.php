@@ -48,7 +48,8 @@ class main extends spController
                     echo $e->geterrorDescription();  //返回错误信息
                 }
 
-                $api->share( $muid, '我刚刚登录了{记账}应用，一款简洁到不能再简洁的应用', 'http://jizhang.ohshit.cc', $_SESSION['userInfo']['id']);
+                $pic = 'http://jizhang.ohshit.cc/public/img/money.jpg';
+                $api->share( $muid, '我刚刚登录了{记账}应用，一款简洁到不能再简洁的应用', 'http://jizhang.ohshit.cc', $_SESSION['userInfo']['id'] , $pic);
                 $this->success('绑定成功', spUrl('main','index'));
             }
         } else {
@@ -172,12 +173,17 @@ class main extends spController
             $itemMod->create($itemInfo);
             if($this->spArgs('share') == 'on'){
                 //分享到各个平台
+                if($itemInfo['type']==1){
+                    $pic = 'http://jizhang.ohshit.cc/public/img/out.jpg';
+                } else {
+                    $pic = 'http://jizhang.ohshit.cc/public/img/in.jpg';
+                }
                 $shareInfo = '我刚刚花了 ' . $itemInfo['money'] . '元 ，' . $itemInfo['title'];
                 $socialMod = spClass('libSocial');
                 $socialInfo = $socialMod->findAll(array('uid'=>$_SESSION['userInfo']['id']));
                 foreach ($socialInfo as $k => $v) {
                     try{
-                        $api->share( $v['media_user_id'] , $shareInfo , 'http://jizhang.ohshit.cc', $v['uid']);
+                        $api->share( $v['media_user_id'] , $shareInfo , 'http://jizhang.ohshit.cc', $v['uid'] , $pic);
                     }catch(DengluException $e){
                         //return false;     
                         echo $e->geterrorCode();  //返回错误编号
