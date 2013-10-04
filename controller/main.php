@@ -23,22 +23,22 @@ class main extends spController
         $token = $this->spArgs('token');
         if(!empty($token)){
             try{
-                $userInfo = $api->getUserInfoByToken($token);
-                var_dump($userInfo);
+                $info = $api->getUserInfoByToken($token);
             }catch(DengluException $e){//获取异常后的处理办法(请自定义)
                 //return false;     
                 echo $e->geterrorCode();  //返回错误编号
                 echo $e->geterrorDescription();  //返回错误信息
             }
-        }die();
+        }
         if($muid && is_numeric($muid)){
             $userMod = spClass('libUser');
             if($userInfo = $userMod->find(array('media_user_id'=>$muid))){
+                $userMod->updateField(array('media_user_id'=>$muid),'nickname',$info['screenName']);
                 $_SESSION['userInfo'] = $userInfo;//登录
                 $this->jump(spUrl('main','itemAdd'));
                 return;
             } else {
-                $userInfo['nickname'] = '';
+                $userInfo['nickname'] = $info['screenName'];
                 $userInfo['media_user_id'] = $muid;
                 $userInfo['token'] = '';
                 $userInfo['id'] = $userMod->create($userInfo);
