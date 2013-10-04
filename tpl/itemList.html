@@ -27,10 +27,7 @@
           <?php global $__action;?>
           <li <?php echo ($__action=='itemAdd')?'class="active"':'';?> ><a href="<?php echo spUrl('main','itemAdd');?>">记账</a></li>
           <li <?php echo ($__action=='itemList')?'class="active"':'';?> ><a href="<?php echo spUrl('main','itemList');?>">列表</a></li>
-          <li><a href="<?php echo spUrl('main','logout');?>">退出</a></li>
-        </ul>
-        <ul class="nav nav-pills pull-right">
-          <li><?php echo $_SESSION['userInfo']['nickname'];?></li>
+          <li><a href="<?php echo spUrl('main','logout');?>"><?php echo $_SESSION['userInfo']['nickname'];?>,退出</a></li>
         </ul>
       </div>
 
