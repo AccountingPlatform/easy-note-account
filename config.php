@@ -43,3 +43,5 @@ $spConfig = array(
         )
     )
 );
+$apiID = $_SERVER['jz_apiid'];
+$apiKey = $_SERVER['jz_apikey'];
