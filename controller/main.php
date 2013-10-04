@@ -13,7 +13,7 @@ class main extends spController
 
     function bindOtherSocialPlatform(){
         if($_SESSION['userInfo']['id']){
-            $this->display('main.html');
+            $this->display('bindOtherSocialPlatform.html');
         } else {
             $this->jump(spUrl('main','index'));
         }
