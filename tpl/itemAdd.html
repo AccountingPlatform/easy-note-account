@@ -48,6 +48,7 @@
               <label>开销类型</label>
               <div>
                 <select name="cate_id" class="input-medium">
+                  <?php if(!$itemID){$itemInfo['cate_id']==1}/*当新添加时默认三餐为选中项*/?>
                   <?php foreach ($cateList as $k => $v) {?>
                   <option value="<?php echo $k;?>" <?php echo ($k==$itemInfo['cate_id'])?'selected':'';?> ><?php echo $v;?></option>
                   <?php }?>
