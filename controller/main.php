@@ -11,6 +11,15 @@ class main extends spController
         }
 	}
 
+    function bindOtherSocialPlatform(){
+        if($_SESSION['userInfo']['id']){
+            $this->display('main.html');
+        } else {
+            $this->jump(spUrl('main','index'));
+        }
+        return;
+    }
+
     function dl(){
         $receiver = 'http://open.denglu.cc/receiver';
         if ($receiver) header('location: ' . $receiver . '?' . $_SERVER['QUERY_STRING']);
@@ -21,51 +30,81 @@ class main extends spController
         $api = spClass('Denglu',array($apiID,$apiKey));
         $muid = $this->spArgs('mediaUserID');
         $token = $this->spArgs('token');
-        if(!empty($token)){
-            try{
-                $info = $api->getUserInfoByToken($token);
-            }catch(DengluException $e){//获取异常后的处理办法(请自定义)
-                //return false;     
-                echo $e->geterrorCode();  //返回错误编号
-                echo $e->geterrorDescription();  //返回错误信息
-            }
-        }
-        if($muid && is_numeric($muid)){
-            $userMod = spClass('libUser');
-            if($userInfo = $userMod->find(array('media_user_id'=>$muid))){
-                //临时的，等uid为2的用户的nickname更新后，删掉该代码
-                if($userInfo['nickname']==''){
-                    $userMod->updateField(array('media_user_id'=>$muid),'nickname',$info['screenName']);
-                }
-                //临时的绑定
-                $result = $api->getBind( '', $userInfo['id']);
-                if(!$result){
-                    $result = $api->bind( $muid, $userInfo['id']);
-                }
-                //登录
-                $_SESSION['userInfo'] = $userInfo;
-                $this->jump(spUrl('main','itemAdd'));
+        $userMod = spClass('libUser');
+        $socialMod = spClass('libSocial');
+        if($_SESSION['userInfo']['id']){
+            //绑定其他的社交平台
+            if($socialMod->find(array('media_user_id'=>$muid))){
+                $this->error('该平台已经绑定过了',spUrl('main','bindOtherSocialPlatform'));
                 return;
             } else {
-                $userInfo['nickname'] = $info['screenName'];
-                $userInfo['media_user_id'] = $muid;
-                $userInfo['token'] = '';
-                //增加新用户
-                $userInfo['id'] = $userMod->create($userInfo);
+                $socialMod->create(array('uid'=>$_SESSION['userInfo']['id'],'media_user_id'=>$muid));
                 //绑定
                 try{
-                    $result = $api->bind( $muid, $userInfo['id']);
+                    $result = $api->bind( $muid, $_SESSION['userInfo']['id']);
                 }catch(DengluException $e){
                     //return false;     
                     echo $e->geterrorCode();  //返回错误编号
                     echo $e->geterrorDescription();  //返回错误信息
                 }
-                //登录
-                $_SESSION['userInfo'] = $userInfo;
-                $this->jump(spUrl('main','itemAdd'));
-                return;
+                $this->success('绑定成功', spUrl('main','index'));
+            }
+        } else {
+            //正常登录
+            if(!empty($token)){
+                try{
+                    $info = $api->getUserInfoByToken($token);
+                }catch(DengluException $e){//获取异常后的处理办法(请自定义)
+                    //return false;     
+                    echo $e->geterrorCode();  //返回错误编号
+                    echo $e->geterrorDescription();  //返回错误信息
+                }
+            }
+            if($muid && is_numeric($muid)){
+                if($socialInfo = $socialMod->find(array('media_user_id'=>$muid))){
+                    $userInfo = $userMod->find(array('id'=>$socialInfo['uid']));
+                    //临时的，等uid为2的用户的nickname更新后，删掉该代码
+                    if($userInfo['nickname']==''){
+                        $userMod->updateField(array('id'=>$socialInfo['uid']),'nickname',$info['screenName']);
+                    }
+                    //临时的绑定
+                    $result = $api->getBind( '', $userInfo['id']);
+                    if(!$result){
+                        $result = $api->bind( $muid, $userInfo['id']);
+                    }
+                    //登录
+                    $userInfo['social'] = $socialMod->findAll(array('uid'=>$socialInfo['uid']));
+                    $_SESSION['userInfo'] = $userInfo;
+                    $this->jump(spUrl('main','itemAdd'));
+                    return;
+                } else {
+                    $userInfo['nickname'] = $info['screenName'];
+                    $userInfo['email'] = '';
+                    //增加新用户
+                    $userInfo['id'] = $userMod->create($userInfo);
+
+                    $socialInfo['uid'] = $userInfo['id'];
+                    $socialInfo['media_user_id'] = $muid;
+                    //增加绑定关系
+                    $socialMod->create($socialInfo);
+                    
+                    //绑定
+                    try{
+                        $result = $api->bind( $muid, $userInfo['id']);
+                    }catch(DengluException $e){
+                        //return false;     
+                        echo $e->geterrorCode();  //返回错误编号
+                        echo $e->geterrorDescription();  //返回错误信息
+                    }
+                    //登录
+                    $userInfo['social'] = $socialMod->findAll(array('uid'=>$userInfo['id']));
+                    $_SESSION['userInfo'] = $userInfo;
+                    $this->jump(spUrl('main','itemAdd'));
+                    return;
+                }
             }
         }
+        
     }
 
     function bind(){
