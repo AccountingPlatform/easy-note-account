@@ -158,7 +158,13 @@ class main extends spController
                 $socialMod = spClass('libSocial');
                 $socialInfo = $socialMod->findAll(array('uid'=>$_SESSION['userInfo']['id']));
                 foreach ($socialInfo as $k => $v) {
-                    $api->share( $v['media_user_id'] , $shareInfo , 'http://jizhang.ohshit.cc', $v['uid']);
+                    try{
+                        $api->share( $v['media_user_id'] , $shareInfo , 'http://jizhang.ohshit.cc', $v['uid']);
+                    }catch(DengluException $e){
+                        //return false;     
+                        echo $e->geterrorCode();  //返回错误编号
+                        echo $e->geterrorDescription();  //返回错误信息
+                    }
                 }
             }
             $this->success('添加成功', spUrl('main','itemList'));
