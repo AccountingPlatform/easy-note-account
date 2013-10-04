@@ -41,9 +41,6 @@ class main extends spController
                 $result = $api->getBind( '', $userInfo['id']);
                 if(!$result){
                     $result = $api->bind( $muid, $userInfo['id']);
-                } else {
-                    var_dump($result);
-                    die();
                 }
                 //登录
                 $_SESSION['userInfo'] = $userInfo;
