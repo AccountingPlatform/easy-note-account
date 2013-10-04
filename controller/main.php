@@ -249,6 +249,10 @@ class main extends spController
         return;
     }
 
+    function comment(){
+        $this->display('comment.html');
+    }
+
     function logout(){
         unset($_SESSION['userInfo']);
         $this->jump(spUrl('main','index',array('act'=>'logout')));
