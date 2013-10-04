@@ -175,10 +175,12 @@ class main extends spController
                 //分享到各个平台
                 if($itemInfo['type']==1){
                     $pic = 'http://jizhang.ohshit.cc/public/img/out.jpg';
+                    $shareInfo = '我刚刚花了 ' . $itemInfo['money'] . '元 ，' . $itemInfo['title'];
                 } else {
                     $pic = 'http://jizhang.ohshit.cc/public/img/in.jpg';
+                    $shareInfo = '我刚刚收入了 ' . $itemInfo['money'] . '元 ，' . $itemInfo['title'];
                 }
-                $shareInfo = '我刚刚花了 ' . $itemInfo['money'] . '元 ，' . $itemInfo['title'];
+                
                 $socialMod = spClass('libSocial');
                 $socialInfo = $socialMod->findAll(array('uid'=>$_SESSION['userInfo']['id']));
                 foreach ($socialInfo as $k => $v) {
