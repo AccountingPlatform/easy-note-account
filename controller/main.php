@@ -40,13 +40,9 @@ class main extends spController
             } else {
                 $socialMod->create(array('uid'=>$_SESSION['userInfo']['id'],'media_user_id'=>$muid));
                 //绑定
-                try{
-                    $result = $api->bind( $muid, $_SESSION['userInfo']['id']);
-                }catch(DengluException $e){
-                    //return false;     
-                    echo $e->geterrorCode();  //返回错误编号
-                    echo $e->geterrorDescription();  //返回错误信息
-                }
+                $result = $api->bind( $muid, $_SESSION['userInfo']['id']);
+
+                $api->share( $muid, '我刚刚登录了{记账}应用，一款简洁到不能再简洁的应用', 'http://jizhang.ohshit.cc', $_SESSION['userInfo']['id']);
                 $this->success('绑定成功', spUrl('main','index'));
             }
         } else {
@@ -75,6 +71,7 @@ class main extends spController
                     //登录
                     $userInfo['social'] = $socialMod->findAll(array('uid'=>$socialInfo['uid']));
                     $_SESSION['userInfo'] = $userInfo;
+                    $api->sendLoginFeed($muid);
                     $this->jump(spUrl('main','itemAdd'));
                     return;
                 } else {
@@ -99,6 +96,7 @@ class main extends spController
                     //登录
                     $userInfo['social'] = $socialMod->findAll(array('uid'=>$userInfo['id']));
                     $_SESSION['userInfo'] = $userInfo;
+                    $api->sendLoginFeed($muid);
                     $this->jump(spUrl('main','itemAdd'));
                     return;
                 }
