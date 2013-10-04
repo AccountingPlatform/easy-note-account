@@ -33,16 +33,33 @@ class main extends spController
         if($muid && is_numeric($muid)){
             $userMod = spClass('libUser');
             if($userInfo = $userMod->find(array('media_user_id'=>$muid))){
-                $userMod->updateField(array('media_user_id'=>$muid),'nickname',$info['screenName']);
-                $_SESSION['userInfo'] = $userInfo;//登录
+                //临时的，等uid为2的用户的nickname更新后，删掉该代码
+                if($userInfo['nickname']==''){
+                    $userMod->updateField(array('media_user_id'=>$muid),'nickname',$info['screenName']);
+                }
+                //临时的
+                $result = $api->getBind( '', $userInfo['id']);
+                var_dump($result);die();
+                //登录
+                $_SESSION['userInfo'] = $userInfo;
                 $this->jump(spUrl('main','itemAdd'));
                 return;
             } else {
                 $userInfo['nickname'] = $info['screenName'];
                 $userInfo['media_user_id'] = $muid;
                 $userInfo['token'] = '';
+                //增加新用户
                 $userInfo['id'] = $userMod->create($userInfo);
-                $_SESSION['userInfo'] = $userInfo;//登录
+                //绑定
+                try{
+                    $result = $api->bind( $muid, $userInfo['id']);
+                }catch(DengluException $e){
+                    //return false;     
+                    echo $e->geterrorCode();  //返回错误编号
+                    echo $e->geterrorDescription();  //返回错误信息
+                }
+                //登录
+                $_SESSION['userInfo'] = $userInfo;
                 $this->jump(spUrl('main','itemAdd'));
                 return;
             }
