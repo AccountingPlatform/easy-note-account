@@ -37,9 +37,14 @@ class main extends spController
                 if($userInfo['nickname']==''){
                     $userMod->updateField(array('media_user_id'=>$muid),'nickname',$info['screenName']);
                 }
-                //临时的
+                //临时的绑定
                 $result = $api->getBind( '', $userInfo['id']);
-                var_dump($result);die();
+                if(!$result){
+                    $result = $api->bind( $muid, $userInfo['id']);
+                } else {
+                    var_dump($result);
+                    die();
+                }
                 //登录
                 $_SESSION['userInfo'] = $userInfo;
                 $this->jump(spUrl('main','itemAdd'));
