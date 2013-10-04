@@ -133,6 +133,8 @@ class main extends spController
 
     function itemAddSave(){
         if(!$_SESSION['userInfo']['id'])$this->error('请先登录',spUrl('main','index'));
+        global $apiID,$apiKey;
+        $api = spClass('Denglu',array($apiID,$apiKey));
         $itemInfo = array(
             'uid' => $_SESSION['userInfo']['id'],
             'title' => $this->spArgs('title','唉，我又花钱了'),
