@@ -265,13 +265,18 @@ class main extends spController
         $id = $this->spArgs('a1');
         $token = $this->spArgs('a2');
         $userMod = spClass('libUser');
-        $userInfo = $userMod->find(array('id'=>$id));
-        if(md5($userInfo['media_user_id']) == $token ){
-            $_SESSION['userInfo'] = $userInfo;
-            echo 1;
-        } else {
-            echo 0;
+        $socialMod = spClass('libSocial');
+        $socialInfo = $socialMod->findAll(array('uid'=>$id));
+        foreach ($socialInfo as $k => $v) {
+            if(md5($v['media_user_id']) == $token ){
+                $userInfo = $userMod->find(array('id'=>$id));
+                $userInfo['social'] = $socialInfo;
+                echo 1;
+                return;
+            }
         }
+        echo 0;
+        return;
     }
 
     function logout(){
