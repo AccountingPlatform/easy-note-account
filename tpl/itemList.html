@@ -2,35 +2,14 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
-    <meta charset="utf-8">
-    <title>记账</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="author" content="ety001">
-
-    <!-- Le styles -->
-    <link href="/public/css/bootstrap.min.css" rel="stylesheet">
-    <link href="/public/css/bootstrap-responsive.min.css" rel="stylesheet">
-    <link href="/public/css/index_styles.css" rel="stylesheet">
-
-    <!-- HTML5 shim, for IE6-8 support of HTML5 elements -->
-    <!--[if lt IE 9]>
-      <script src="//cdnjs.bootcss.com/ajax/libs/html5shiv/3.6.2/html5shiv.js"></script>
-    <![endif]-->
+    <?php include('z_header.html');?>
   </head>
 
   <body>
 
     <div class="container-narrow">
 
-      <div class="masthead">
-        <ul class="nav nav-pills">
-          <?php global $__action;?>
-          <li><a href="<?php echo spUrl('main','itemList');?>">欢迎，<?php echo $_SESSION['userInfo']['nickname'];?></a></li>
-          <li <?php echo ($__action=='itemAdd')?'class="active"':'';?> ><a href="<?php echo spUrl('main','itemAdd');?>">记账</a></li>
-          <li <?php echo ($__action=='itemList')?'class="active"':'';?> ><a href="<?php echo spUrl('main','itemList');?>">列表</a></li>
-          <li><a href="<?php echo spUrl('main','logout');?>">退出</a></li>
-        </ul>
-      </div>
+      <?php include('z_nav.html');?>
 
       <hr>
 
@@ -75,14 +54,11 @@
 
       <hr>
 
-      <div class="footer">
-        <p>&copy; 2013 | <a href="<?php echo spUrl('main','bindOtherSocialPlatform');?>">绑定其他社交平台</a> | <a href="<?php echo spUrl('main','comment');?>">留言建议</a></p>
-      </div>
+      <?php include('z_footer.html');?>
 
     </div> <!-- /container -->
 
-    <script src="/public/js/jquery.min.js"></script>
-    <script src="/public/js/bootstrap.min.js"></script>
+    <?php include('z_footer_js.html');?>
     <script type="text/javascript">
     $(function(){
       if(window.localStorage){
@@ -90,6 +66,5 @@
       }
     });
     </script>
-    <script src="/public/js/tongji.js"></script>
   </body>
 </html>
