@@ -49,7 +49,7 @@ class main extends spController
                 }
 
                 $pic = 'http://jizhang.ohshit.cc/public/img/money.jpg';
-                $api->share( $muid, '我刚刚登录了{记账}应用，一款简洁到不能再简洁的应用。【记账】http://jizhang.ohshit.cc', 'http://jizhang.ohshit.cc', $_SESSION['userInfo']['id']);
+                $api->share( $muid, '我刚刚登录了{记账}应用，一款简洁到不能再简洁的应用。', 'http://jizhang.ohshit.cc', $_SESSION['userInfo']['id']);
                 $this->success('绑定成功', spUrl('main','index'));
             }
         } else {
